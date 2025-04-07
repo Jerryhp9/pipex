@@ -11,20 +11,51 @@
 /* ************************************************************************** */
 #include "pipex.h"
 
-char*ft_splitpath()
+static int	wordcount(char *str, char c)
 {
-		
+	int words;
+	int j;
+
+	words = 0;
+	j = 0;
+	while (str[j])
+	{
+		if (str[j] == c)
+			word++;
+		if (str[j] != c && str[j] != '\0')
+			j++;
+		j++;
+	}
+	return (words);
 }
 
-char *ft_cmdfound(char *paths)
+char **splitcmd(const char *str, char c)
 {
-	int fd;
-	
-	fd = access("", F_OK);
-	if (fd == -1)
+	char **s;
+	int i;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	if (str[i] != c)
+		return (str);
+	while (str[i])
 	{
-		printf("%d\n", errno);
-		perror("Error");
+		if(str[i] == c)
+			s = malloc(sizeof(char *) ) 
 	}
-	printf("%d\n", fd);
+
 }
+
+// char *ft_cmdfound(char *paths)
+// {
+// 	int fd;
+	
+// 	fd = access("", F_OK);
+// 	if (fd == -1)
+// 	{
+// 		printf("%d\n", errno);
+// 		perror("Error");
+// 	}
+// 	printf("%d\n", fd);
+// }

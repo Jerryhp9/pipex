@@ -1,35 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   fetchpath.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhor <jhor@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 16:19:36 by jhor              #+#    #+#             */
-/*   Updated: 2025/04/01 16:19:36 by jhor             ###   ########.fr       */
+/*   Created: 2025/04/17 14:38:55 by jhor              #+#    #+#             */
+/*   Updated: 2025/04/17 14:38:55 by jhor             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
 
-// void stdinfile(int infile)
-// {
-// 	int infile = open("file1", O_WRONLY | O_CREAT, 0777);
-// 	dup2(infile, STDIN_FILENO);
-// 	close(infile);
-// }
+#include "../pipex.h" 
 
-char *cmd1(const char *argc, char const *argv[], char **envp)
+char *fetchpath(char *envp)
 {
-	char *PATH;
 	char *path;
 	
-	PATH = "PATH=";
 	while (*envp)
 	{
-		if (*envp && ft_strncmp(*envp, PATH, 6))
-			path = ft_strdup(*envp);
+		if (*envp && ft_strncmp(*envp, "PATH=", 5) == 0)
+		{
+			path = *envp;
+			return (path);
+		}	
 		envp++;
 	}
 }
 
-// int main(argc, char *argv[], char *envp[])
+char *cmd_path(char *path)
+{
+	char *concat;
+	char *path = fetchpath("PATH=");
+
+	concat = ft_strjoinv();
+	if (access(path, F_OK | X_OK) == 0)
+	while (path)
+	{
+			
+	}
+}
+
+int main(int argc, char *argv[], char *envp[])
+{
+	printf("%s", fetchpath(envp));
+}
+

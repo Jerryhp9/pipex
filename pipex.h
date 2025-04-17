@@ -18,6 +18,9 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include "./libft/libft.h"
 
 static int	wordcount(char *str, char c);
 char	**ft_split(const char *s, char c);

@@ -18,18 +18,5 @@
 // 	close(infile);
 // }
 
-char *cmd1(const char *argc, char const *argv[], char **envp)
-{
-	char *PATH;
-	char *path;
-	
-	PATH = "PATH=";
-	while (*envp)
-	{
-		if (*envp && ft_strncmp(*envp, PATH, 6))
-			path = ft_strdup(*envp);
-		envp++;
-	}
-}
 
 // int main(argc, char *argv[], char *envp[])

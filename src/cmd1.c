@@ -12,7 +12,7 @@
 
 #include "../pipex.h" 
 
-char *fetchpath(char *envp)
+char *fetchpath(char **envp)
 {
 	char *path;
 	
@@ -21,27 +21,27 @@ char *fetchpath(char *envp)
 		if (*envp && ft_strncmp(*envp, "PATH=", 5) == 0)
 		{
 			path = *envp;
-			return (path);
-		}	
+		}
 		envp++;
 	}
+	return (path);
 }
 
-char *cmd_path(char *path)
+char **cmd_path(char *paths)
 {
-	char *concat;
-	char *path = fetchpath("PATH=");
+	char **concat;
+	char **envp;
 
-	concat = ft_strjoinv();
-	if (access(path, F_OK | X_OK) == 0)
-	while (path)
-	{
-			
-	}
+	paths = fetchpath(envp);
+	concat = ft_split(paths, ':');
+	return(concat);
 }
 
 int main(int argc, char *argv[], char *envp[])
 {
-	printf("%s", fetchpath(envp));
+	char *cmd = "ls";
+	
+
+	printf("%s", cmd_path(cmd));
 }
 

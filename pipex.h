@@ -22,10 +22,11 @@
 #include <stdarg.h>
 #include "./libft/libft.h"
 
-int	wordcount(char *str, char c);
-char	**ft_split(const char *s, char c);
+static int	wordcount(char *str, char c);
+char	**ft_split(char *s, char c);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
+char *	ft_strjoinv(int nbr, ...);
 
 #endif

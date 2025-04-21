@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 size_t	ft_strlen(const char *str)
 {
@@ -80,7 +80,7 @@ static int	wordcount(char *str, char c)
 	return (words);
 }
 
-char	**ft_split(const char *s, char c)
+char	**ft_split(char *s, char c)
 {
 	int		wordlen;
 	char	**str;
@@ -99,12 +99,30 @@ char	**ft_split(const char *s, char c)
 			if (!ft_strchr(s, c))
 				wordlen = ft_strlen(s);
 			else
-				wordlen = ft_strchr(s, c) - ft_strlen(s);
+				wordlen = ft_strchr(s, c) - s;
 			str[i] = ft_substr(s, 0, wordlen);
 			i++;
 			s += wordlen;
 		}
 	}
 	str[i] = NULL;
+	return (str);
+}
+
+char *	ft_strjoinv(int nbr, ...)
+{
+	va_list p;
+	char *str;
+	char *temp;
+
+	va_start(p, nbr);
+	str = ft_strdup("");
+	while (nbr--)
+	{
+		temp = str;
+		str = ft_strjoin(str, va_arg(p, char *));
+		printf("%s", (char *)p);
+		free (temp);
+	}
 	return (str);
 }

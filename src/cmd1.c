@@ -31,7 +31,6 @@ char **cmd_path(char **envp)
 {
 	char	**concat;
 	char	*paths;
-	char	*joincmd;
 	
 	paths = fetchpath(envp);
 	concat = ft_split(paths, ':');
@@ -40,18 +39,28 @@ char **cmd_path(char **envp)
 	return(concat);
 }
 
-void check_cmd_path(char **concat, char **argv, char **envp)
+void check_cmd_path(char **concat, int argc, char **argv, char **envp)
 {
 	int		i;
 	char	*execmd;
+	char	**cmds;
+
 	i = 0;
+	cmds = cmd_arg(argc, argv);
+	// while (cmds[i])
+	// {
+	// 	printf("%d is %s\n", i, cmds[i]);
+	// 	i++;
+	// }
+	// printf("%s", execmd);
 	if (access(*argv, F_OK | X_OK) == 0)
-		execve("/usr/bin/ls", argv, envp);
+	execve(*concat, cmds, envp);
 	while (concat[i])
 	{
-		execmd = ft_strjoinv(3, concat[i], "/", *argv);
+		execmd = ft_strjoinv(3, concat[i], "/", cmds[0]);
+		printf("%s", execmd);
 		if (access(execmd, F_OK | X_OK) == 0)
-			execve(execmd, argv, envp);
+			execve(execmd, cmds, envp);
 		i++;
 	}
 }
@@ -68,5 +77,5 @@ int main(int argc, char *argv[], char *envp[])
 		printf("%d", errno);
 		perror("Path not found");
 	}
-	check_cmd_path(dirs, &argv[1], envp);
+	check_cmd_path(dirs, argc, argv, envp);
 }

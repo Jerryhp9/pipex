@@ -11,12 +11,30 @@
 /* ************************************************************************** */
 #include "pipex.h"
 
-// void stdinfile(int infile)
-// {
-// 	int infile = open("file1", O_WRONLY | O_CREAT, 0777);
-// 	dup2(infile, STDIN_FILENO);
-// 	close(infile);
-// }
+void stdinfile(int file)
+{
+	int infile = open("infile", O_WRONLY | O_CREAT, 0777);
+	dup2(infile, STDIN_FILENO);
+	close(infile);
+}
 
 
-// int main(argc, char *argv[], char *envp[])
+int main()
+{
+	pid_t pid = fork();
+
+	if (pid < 0)
+	{
+		printf ("Error message: %d", errno);
+		perror("Error:" );
+		return 1;
+	} 
+	else if (pid == 0)
+	{
+		printf("This is the child: %d\n", getpid());
+	} else 
+	{
+		printf("This is the child: %d\n This is the parent: %d\n", pid, getpid());
+	}
+	return 0;
+}

@@ -54,28 +54,28 @@ void check_cmd_path(char **concat, int argc, char **argv, char **envp)
 	// }
 	// printf("%s", execmd);
 	if (access(*argv, F_OK | X_OK) == 0)
-	execve(*concat, cmds, envp);
+		execve(*concat, cmds, envp);
 	while (concat[i])
 	{
 		execmd = ft_strjoinv(3, concat[i], "/", cmds[0]);
-		printf("%s", execmd);
+		// printf("%s", execmd);
 		if (access(execmd, F_OK | X_OK) == 0)
 			execve(execmd, cmds, envp);
 		i++;
 	}
 }
 
-int main(int argc, char *argv[], char *envp[])
-{
-	char **dirs;
-	int i;
+// int main(int argc, char *argv[], char *envp[])
+// {
+// 	char **dirs;
+// 	int i;
 
-	i = 0;
-	dirs = cmd_path(envp);
-	if(!dirs)
-	{
-		printf("%d", errno);
-		perror("Path not found");
-	}
-	check_cmd_path(dirs, argc, argv, envp);
-}
+// 	i = 0;
+// 	dirs = cmd_path(envp);
+// 	if(!dirs)
+// 	{
+// 		printf("%d", errno);
+// 		perror("Path not found");
+// 	}
+// 	check_cmd_path(dirs, argc, argv, envp);
+// }

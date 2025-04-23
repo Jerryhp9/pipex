@@ -20,14 +20,18 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <sys/wait.h>
 #include "./libft/libft.h"
 
-static int	wordcount(char *str, char c);
+// static int	wordcount(char *str, char c);
 char		**ft_split(char *s, char c);
 size_t		ft_strlen(const char *str);
 char		*ft_strdup(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strjoinv(int nbr, ...);
+// char		*fetchpath(char **envp)
 char		**cmd_arg(int argc, char **argv);
+char		**cmd_path(char **envp);
+void		check_cmd_path(char **concat, int argc, char **argv, char **envp);
 
 #endif

@@ -11,8 +11,8 @@
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
-NAME = pipex.a
+CFLAGS = -Wall -Werror -Wextra -g
+NAME = pipex
 RM = rm -f
 
 LIBFT_DIR = libft/
@@ -22,8 +22,8 @@ SRC = src/cmd1.c src/pipex_utils.c pipex.c src/cmd_arg.c
 
 OBJ = $(SRC:.c=.o)
 
-$(NAME): $(OBJ)
-	@ar -rcs $(NAME) $(OBJ)
+$(NAME): $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) -Ipipex.h -Ilibft/libft.h $(OBJ) $(LIBFT) -o $@
 
 all: $(NAME)
 
@@ -32,7 +32,7 @@ all: $(NAME)
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBFT): FORCE
+$(LIBFT):
 		make -C $(LIBFT_DIR)
 
 clean:

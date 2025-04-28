@@ -12,12 +12,12 @@
 
 #include "../pipex.h"
 
-char **cmd_arg(int argc, char **argv)
+char **cmd_arg(int argc, char *argv)
 {
-	char	** cmds;
+	char	**cmds;
 
 	if (argc > 1)
-		cmds = ft_split(argv[1], ' ');
+		cmds = ft_split(argv, ' ');
 	else 
 		return NULL;
 	return (cmds);

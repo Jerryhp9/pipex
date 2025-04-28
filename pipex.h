@@ -30,8 +30,8 @@ char		*ft_strdup(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strjoinv(int nbr, ...);
 // char		*fetchpath(char **envp)
-char		**cmd_arg(int argc, char **argv);
+char		**cmd_arg(int argc, char *argv);
 char		**cmd_path(char **envp);
-void		check_cmd_path(char **concat, int argc, char **argv, char **envp);
+void		check_cmd_path(char **concat, int argc, char *argv, char **envp);
 
 #endif

@@ -35,18 +35,29 @@ char	**cmd_path(char **envp)
 	paths = fetchpath(envp);
 	concat = ft_split(paths, ':');
 	if (!concat)
-	return NULL;
+		return NULL;
 	return(concat);
 }
+void freefunc(char **concat)
+{
+	int i;
 
-void	check_cmd_path(char **concat, int argc, char *argv, char **envp)
+	i = 0;
+	while(concat[i])
+	{
+		free(concat[i]);
+		i++;
+	}
+	free(concat);
+}
+
+int	check_cmd_path(char **concat, int argc, char *argv, char **envp)
 {
 	int		i;
 	char	*execmd;
 	char	**cmds;
 
 	i = 0;
-	(void)envp;
 	cmds = cmd_arg(argc, argv);
 	if (access(cmds[0], F_OK | X_OK) == 0)
 		execve(cmds[0], cmds, envp);
@@ -55,9 +66,14 @@ void	check_cmd_path(char **concat, int argc, char *argv, char **envp)
 		execmd = ft_strjoinv(3, concat[i], "/", cmds[0]);
 		if (access(execmd, F_OK | X_OK) == 0)
 			execve(execmd, cmds, envp);
+		free(execmd);
 		i++;
 	}
+	freefunc(concat);
+		perror(argv);
+		exit(127);
 }
+
 
 // int main(int argc, char *argv[], char *envp[])
 // {

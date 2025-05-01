@@ -106,6 +106,7 @@ char	**ft_split(char *s, char c)
 		}
 	}
 	str[i] = NULL;
+
 	return (str);
 }
 
@@ -121,8 +122,8 @@ char *	ft_strjoinv(int nbr, ...)
 	{
 		temp = str;
 		str = ft_strjoin(str, va_arg(p, char *));
-		printf("%s", (char *)p);
-		free (temp);
+		free(temp);
 	}
+	// free(temp);
 	return (str);
 }

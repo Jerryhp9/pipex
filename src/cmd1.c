@@ -24,6 +24,7 @@ char	*fetchpath(char **envp)
 		}
 		envp++;
 	}
+	// printf("%s\n", path);
 	return (path);
 }
 
@@ -31,17 +32,30 @@ char	**cmd_path(char **envp)
 {
 	char	**concat;
 	char	*paths;
+	// int i = 0;
 	
 	paths = fetchpath(envp);
 	concat = ft_split(paths, ':');
+	// while (concat[i])
+	// {
+	// 	printf("%s\n", concat[i]);
+	// 	i++;
+	// }
 	if (!concat)
 		return NULL;
 	return(concat);
 }
+
+// void clear_exec(char *execmd, char **cmds, char **concat, char **envp)
+// {
+	// 	freefunc(concat);
+	// 	freefunc(cmds);
+	// 	execve(execmd, cmds, envp);
+	// }
 void freefunc(char **concat)
 {
 	int i;
-
+	
 	i = 0;
 	if (!concat)
 		return;
@@ -52,14 +66,7 @@ void freefunc(char **concat)
 	}
 	free(concat);
 }
-
-// void clear_exec(char *execmd, char **cmds, char **concat, char **envp)
-// {
-// 	freefunc(concat);
-// 	freefunc(cmds);
-// 	execve(execmd, cmds, envp);
-// }
-
+	
 int	check_cmd_path(char **concat, int argc, char *argv, char **envp)
 {
 	int		i;
@@ -87,9 +94,9 @@ int	check_cmd_path(char **concat, int argc, char *argv, char **envp)
 		i++;
 	}
 	freefunc(concat);
+	perror(cmds[0]);
 	freefunc(cmds);
-		perror(argv);
-		exit(127);
+	exit(127);
 }
 
 

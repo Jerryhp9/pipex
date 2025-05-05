@@ -125,6 +125,6 @@ char *	ft_strjoinv(int nbr, ...)
 		str = ft_strjoin(str, va_arg(p, char *));
 		free(temp);
 	}
-		return NULL;
+		// return NULL;
 	return (str);
 }

@@ -43,6 +43,8 @@ void freefunc(char **concat)
 	int i;
 
 	i = 0;
+	if (!concat)
+		return;
 	while(concat[i])
 	{
 		free(concat[i]);
@@ -50,6 +52,13 @@ void freefunc(char **concat)
 	}
 	free(concat);
 }
+
+// void clear_exec(char *execmd, char **cmds, char **concat, char **envp)
+// {
+// 	freefunc(concat);
+// 	freefunc(cmds);
+// 	execve(execmd, cmds, envp);
+// }
 
 int	check_cmd_path(char **concat, int argc, char *argv, char **envp)
 {
@@ -59,17 +68,26 @@ int	check_cmd_path(char **concat, int argc, char *argv, char **envp)
 
 	i = 0;
 	cmds = cmd_arg(argc, argv);
-	if (access(cmds[0], F_OK | X_OK) == 0)
+	if (!cmds || !*cmds)
+	{
+		freefunc(cmds);
+		return (1);
+	}
+	if (*cmds && **cmds != '\0' && access(cmds[0], F_OK | X_OK) == 0)
 		execve(cmds[0], cmds, envp);
 	while (concat[i])
 	{
-		execmd = ft_strjoinv(3, concat[i], "/", cmds[0]);
-		if (access(execmd, F_OK | X_OK) == 0)
-			execve(execmd, cmds, envp);
-		free(execmd);
+		if (cmds[0] && concat[i])
+		{
+			execmd = ft_strjoinv(3, concat[i], "/", cmds[0]);
+			if (execmd != NULL && access(execmd, F_OK | X_OK) == 0)
+				execve(execmd, cmds, envp);
+			free(execmd);
+		}
 		i++;
 	}
 	freefunc(concat);
+	freefunc(cmds);
 		perror(argv);
 		exit(127);
 }

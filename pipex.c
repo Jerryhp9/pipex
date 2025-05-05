@@ -26,6 +26,7 @@ pid_t firstchild(int argc, char **argv, char **envp, int fd1)
 		if (infile == -1)
 		{
 			perror(argv[1]);
+
 			exit(1);
 		}
 		dup2(infile, 0);
@@ -34,6 +35,7 @@ pid_t firstchild(int argc, char **argv, char **envp, int fd1)
 		close(fd1);
 		fetchcmd = cmd_path(envp);
 		check_cmd_path(fetchcmd, argc, argv[2], envp);
+		freefunc(fetchcmd);
 	}
 	return (pid1);
 }
@@ -54,6 +56,7 @@ pid_t secondchild(int argc, char **argv, char **envp, int fd2)
 		if (outfile == -1)
 		{
 			perror(argv[4]);
+			freefunc(fetchcmd1);
 			exit(1);
 		}
 		dup2(outfile, 1);

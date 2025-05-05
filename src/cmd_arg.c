@@ -20,6 +20,8 @@ char **cmd_arg(int argc, char *argv)
 		cmds = ft_split(argv, ' ');
 	else 
 		return NULL;
+	if (cmds == NULL)
+		exit(1);
 	return (cmds);
 }
 // int main(int argc, char **argv)

@@ -14,7 +14,7 @@
 
 char	*fetchpath(char **envp)
 {
-	char *path;
+	char	*path;
 	
 	while (*envp)
 	{
@@ -24,7 +24,6 @@ char	*fetchpath(char **envp)
 		}
 		envp++;
 	}
-	// printf("%s\n", path);
 	return (path);
 }
 
@@ -32,29 +31,17 @@ char	**cmd_path(char **envp)
 {
 	char	**concat;
 	char	*paths;
-	// int i = 0;
 	
 	paths = fetchpath(envp);
 	concat = ft_split(paths, ':');
-	// while (concat[i])
-	// {
-	// 	printf("%s\n", concat[i]);
-	// 	i++;
-	// }
 	if (!concat)
 		return NULL;
 	return(concat);
 }
 
-// void clear_exec(char *execmd, char **cmds, char **concat, char **envp)
-// {
-	// 	freefunc(concat);
-	// 	freefunc(cmds);
-	// 	execve(execmd, cmds, envp);
-	// }
 void freefunc(char **concat)
 {
-	int i;
+	int	i;
 	
 	i = 0;
 	if (!concat)
@@ -66,37 +53,34 @@ void freefunc(char **concat)
 	}
 	free(concat);
 }
-	
+
 int	check_cmd_path(char **concat, int argc, char *argv, char **envp)
 {
-	int		i;
-	char	*execmd;
-	char	**cmds;
-
-	i = 0;
-	cmds = cmd_arg(argc, argv);
-	if (!cmds || !*cmds)
-	{
-		freefunc(cmds);
-		return (1);
-	}
-	if (*cmds && **cmds != '\0' && access(cmds[0], F_OK | X_OK) == 0)
-		execve(cmds[0], cmds, envp);
-	while (concat[i])
-	{
-		if (cmds[0] && concat[i])
+	t_cato	*cmdpath;
+	
+	cmdpath = &(t_cato){0};
+	cmdpath->i = 0;
+	cmdpath->cmds = cmd_arg(argc, argv);
+	if (!cmdpath->cmds || !*cmdpath->cmds)
 		{
-			execmd = ft_strjoinv(3, concat[i], "/", cmds[0]);
-			if (execmd != NULL && access(execmd, F_OK | X_OK) == 0)
-				execve(execmd, cmds, envp);
-			free(execmd);
+			freefunc(cmdpath->cmds);
+			return (1);
 		}
-		i++;
+	if (*cmdpath->cmds && **cmdpath->cmds != '\0' && access(cmdpath->cmds[0], F_OK | X_OK) == 0)
+		execve(cmdpath->cmds[0], cmdpath->cmds, envp);
+	while (concat[cmdpath->i])
+	{
+		if (cmdpath->cmds[0] && concat[cmdpath->i])
+		{
+			cmdpath->execmd = ft_strjoinv(3, concat[cmdpath->i], "/", cmdpath->cmds[0]);
+			if (cmdpath->execmd != NULL && access(cmdpath->execmd, F_OK | X_OK) == 0)
+				execve(cmdpath->execmd, cmdpath->cmds, envp);
+			free(cmdpath->execmd);
+		}
+		cmdpath->i++;
 	}
-	freefunc(concat);
-	perror(cmds[0]);
-	freefunc(cmds);
-	exit(127);
+	(freefunc(concat), perror(cmdpath->cmds[0]));
+	(freefunc(cmdpath->cmds), exit(127));
 }
 
 

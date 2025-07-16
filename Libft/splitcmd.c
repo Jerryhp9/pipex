@@ -1,10 +1,20 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   splitcmd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhor <jhor@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/14 22:20:30 by jhor              #+#    #+#             */
+/*   Updated: 2025/07/14 22:20:30 by jhor             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "libft.h"
 
 static int	wordcount(const char *str, int c)
 {
-	int count;
-	int j;
+	int	count;
+	int	j;
 
 	count = 0;
 	j = 0;
@@ -26,11 +36,11 @@ static int	wordcount(const char *str, int c)
 // 	printf("%d\n", wordcount(str1, 'o'));
 // }
 
-char **splitcmd(char *str, char c)
+char	**splitcmd(char *str, char c)
 {
-	char **s;
-	int i;
-	int wordlen;
+	char	**s;
+	int		i;
+	int		wordlen;
 
 	i = 0;
 	if (!str)
@@ -39,10 +49,10 @@ char **splitcmd(char *str, char c)
 	while (*str)
 	{
 		while (*str == c)
-		str++;
+			str++;
 		if (*str != c && str)
-		{	
-			if (!ft_strchr(str, c ))
+		{
+			if (!ft_strchr(str, c))
 				wordlen = ft_strlen(str);
 			else
 				wordlen = ft_strchr(str, c) - str;
@@ -52,7 +62,7 @@ char **splitcmd(char *str, char c)
 		}
 	}
 	s[i] = NULL;
-	return(s);
+	return (s);
 }
 
 // int main()

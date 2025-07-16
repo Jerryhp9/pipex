@@ -12,11 +12,11 @@
 
 #include "libft.h"
 
-char *	ft_strjoinv(int nbr, ...)
+char	*ft_strjoinv(int nbr, ...)
 {
-	va_list p;
-	char *str;
-	char *temp;
+	va_list	p;
+	char	*str;
+	char	*temp;
 
 	va_start(p, nbr);
 	str = ft_strdup("");
@@ -37,7 +37,6 @@ char *	ft_strjoinv(int nbr, ...)
 // 	char *str2 = "BYe==";
 
 // 	char *ulti = ft_strjoinv(3, str, str1, str2);
-	
 // 	printf("%s", ulti);
 // 	free(ulti);
 // }

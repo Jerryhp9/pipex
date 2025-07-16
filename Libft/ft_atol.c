@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhor <jhor@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 12:38:13 by jhor              #+#    #+#             */
-/*   Updated: 2024/11/15 12:38:13 by jhor             ###   ########.fr       */
+/*   Created: 2025/07/10 14:26:58 by jhor              #+#    #+#             */
+/*   Updated: 2025/07/10 14:26:58 by jhor             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static int	ft_isspace(char c)
 	return (0);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
-	int	num;
-	int	sign;
+	long	num;
+	int		sign;
 
 	num = 0;
 	sign = 1;
@@ -43,9 +43,3 @@ int	ft_atoi(const char *str)
 	}
 	return (num * sign);
 }
-// int main()
-// {
-// 	char str1[] = "   +1234a567";
-
-// 	printf("%d\n", ft_atoi(str1));
-// }

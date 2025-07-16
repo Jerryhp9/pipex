@@ -15,10 +15,10 @@ CFLAGS = -Wall -Werror -Wextra -g
 NAME = pipex
 RM = rm -f
 
-LIBFT_DIR = libft/
+LIBFT_DIR = Libft/
 LIBFT = $(LIBFT_DIR)libft.a
 
-SRC = src/cmd1.c src/pipex_utils.c pipex.c src/cmd_arg.c
+SRC = src/cmd1.c src/pipex_utils.c pipex.c src/cmd_arg.c src/pipex_utils2.c
 
 OBJ = $(SRC:.c=.o)
 

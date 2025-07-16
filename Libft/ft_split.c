@@ -66,15 +66,15 @@ char	**ft_split(char *s, char c)
 	return (str);
 }
 
-int main ()
-{
-	char *str = "___________________________qwe____rtyy__/////_";
+// int main ()
+// {
+// 	char *str = "___________________________qwe____rtyy__/////_";
 
-	char **output = ft_split(str, '_');
-	int index = 0;
-	while (output[index])
-	{
-		printf("%s\n", output[index]);
-		index++;
-	}
-}
+// 	char **output = ft_split(str, '_');
+// 	int index = 0;
+// 	while (output[index])
+// 	{
+// 		printf("%s\n", output[index]);
+// 		index++;
+// 	}
+// }

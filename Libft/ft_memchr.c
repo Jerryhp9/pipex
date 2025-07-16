@@ -10,11 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//check each bytes for occurence of a certain char and return a str starting from the occurence
-
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n) //n is to limit the bytes of memory to check
+void	*ft_memchr(const void *s, int c, size_t n)
 {
 	const char	*p;
 	size_t		i;

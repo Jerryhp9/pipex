@@ -42,23 +42,23 @@ char	*ft_itoa(int n)
 	int		len;
 	long	nbr;
 
-	len = numlen(n); //the total length of integers
-	str = (char *)malloc((sizeof(char)) * (len + 1)); //memory allocation for str
+	len = numlen(n);
+	str = (char *)malloc((sizeof(char)) * (len + 1));
 	if (str == NULL)
 		return (NULL);
-	nbr = n; //set nbr to value of n
-	str[len] = '\0'; //add null terminator to end of str
+	nbr = n;
+	str[len] = '\0';
 	if (nbr == 0)
 		*str = '0';
-	if (nbr < 0) // change value into - value by adding sign -
+	if (nbr < 0)
 	{
 		str[0] = '-';
 		nbr = -nbr;
 	}
-	while (nbr > 0) //condition nbr > 0 then decrement from the end, 
+	while (nbr > 0)
 	{
-		str[--len] = (nbr % 10) + '0'; //decremen then get the modulo of nbr then input it into str
-		nbr /= 10; //get the divided value of nbr
+		str[--len] = (nbr % 10) + '0';
+		nbr /= 10;
 	}
 	return (str);
 }

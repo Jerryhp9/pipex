@@ -31,7 +31,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	ft_memcpy(str, s1 + i, j - i);
 	str[j - i] = '\0';
-	return (str); 
+	return (str);
 }
 // int main()
 // {

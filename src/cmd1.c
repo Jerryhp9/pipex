@@ -15,7 +15,7 @@
 char	*fetchpath(char **envp)
 {
 	char	*path;
-	
+
 	while (*envp)
 	{
 		if (ft_strncmp(*envp, "PATH=", 5) == 0)
@@ -31,70 +31,60 @@ char	**cmd_path(char **envp)
 {
 	char	**concat;
 	char	*paths;
-	
+
 	paths = fetchpath(envp);
 	concat = ft_split(paths, ':');
 	if (!concat)
-		return NULL;
-	return(concat);
+		return (NULL);
+	return (concat);
 }
 
-void freefunc(char **concat)
+void	error_printing(char **s)
 {
-	int	i;
-	
-	i = 0;
-	if (!concat)
-		return;
-	while(concat[i])
+	char	*error;
+	char	*message;
+	char	*string;
+	char	*tmp;
+
+	message = NULL;
+	string = ft_strdup("");
+	while (*s != NULL)
 	{
-		free(concat[i]);
-		i++;
+		tmp = ft_strjoin(string, *s);
+		free(string);
+		string = tmp;
+		tmp = ft_strjoin(string, " ");
+		free(string);
+		string = tmp;
+		s++;
 	}
-	free(concat);
+	if (string[ft_strlen(string) - 1] == ' ')
+		string[ft_strlen(string) - 1] = '\0';
+	error = ft_strdup(": command not found\n");
+	message = ft_strjoin(string, error);
+	free(string);
+	free(error);
+	ft_putstr_fd(message, 2);
+	free(message);
 }
 
 int	check_cmd_path(char **concat, int argc, char *argv, char **envp)
 {
-	t_cato	*cmdpath;
-	
-	cmdpath = &(t_cato){0};
-	cmdpath->i = 0;
-	cmdpath->cmds = cmd_arg(argc, argv);
-	if (!cmdpath->cmds || !*cmdpath->cmds)
-		{
-			freefunc(cmdpath->cmds);
-			return (1);
-		}
-	if (*cmdpath->cmds && **cmdpath->cmds != '\0' && access(cmdpath->cmds[0], F_OK | X_OK) == 0)
-		execve(cmdpath->cmds[0], cmdpath->cmds, envp);
-	while (concat[cmdpath->i])
+	t_cato	*cdph;
+
+	cdph = &(t_cato){0};
+	cdph->i = 0;
+	cdph->cmds = cmd_arg(argc, argv);
+	if (!cdph->cmds || !*cdph->cmds)
 	{
-		if (cmdpath->cmds[0] && concat[cmdpath->i])
-		{
-			cmdpath->execmd = ft_strjoinv(3, concat[cmdpath->i], "/", cmdpath->cmds[0]);
-			if (cmdpath->execmd != NULL && access(cmdpath->execmd, F_OK | X_OK) == 0)
-				execve(cmdpath->execmd, cmdpath->cmds, envp);
-			free(cmdpath->execmd);
-		}
-		cmdpath->i++;
+		freefunc(cdph->cmds);
+		return (1);
 	}
-	(freefunc(concat), perror(cmdpath->cmds[0]));
-	(freefunc(cmdpath->cmds), exit(127));
+	if (*cdph->cmds && **cdph->cmds != '\0'
+		&& access(cdph->cmds[0], F_OK | X_OK) == 0)
+		execve(cdph->cmds[0], cdph->cmds, envp);
+	exec_cmd(concat, cdph, envp);
+	freefunc(concat);
+	error_printing(cdph->cmds);
+	(freefunc(cdph->cmds), exit(127));
 }
-
-
-// int main(int argc, char *argv[], char *envp[])
-// {
-// 	char **dirs;
-// 	int i;
-
-// 	i = 0;
-// 	dirs = cmd_path(envp);
-// 	if(!dirs)
-// 	{
-// 		printf("%d", errno);
-// 		perror("Path not found");
-// 	}
-// 	check_cmd_path(dirs, argc, argv, envp);
-// }

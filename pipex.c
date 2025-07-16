@@ -11,43 +11,43 @@
 /* ************************************************************************** */
 #include "pipex.h"
 
-pid_t	firstchild(int argc, char **argv, char **envp, int fd1, int fd0)
+pid_t	firstchild(int argc, char **argv, char **envp, int *fd)
 {
 	t_list	*child1;
 
 	child1 = &(t_list){0};
 	child1->pid1 = fork();
 	if (child1->pid1 == -1)
-		return -1;
-	else if (child1->pid1 == 0) //scope of child process
+		return (-1);
+	else if (child1->pid1 == 0)
 	{
 		child1->fetchcmd = cmd_path(envp);
-		child1->infile = open(argv[1], O_RDONLY); //cmd reading from infile
+		child1->infile = open(argv[1], O_RDONLY);
 		if (child1->infile == -1)
 		{
-			perror(argv[2]);
+			perror(argv[1]);
 			freefunc(child1->fetchcmd);
 			exit(1);
 		}
 		dup2(child1->infile, 0);
 		close(child1->infile);
-		dup2(fd1, 1);
-		close(fd1);
-		close(fd0);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		close(fd[0]);
 		check_cmd_path(child1->fetchcmd, argc, argv[2], envp);
 		freefunc(child1->fetchcmd);
 	}
 	return (child1->pid1);
 }
 
-pid_t	secondchild(int argc, char **argv, char **envp, int fd2, int fd1)
+pid_t	secondchild(int argc, char **argv, char **envp, int *fd)
 {
 	t_stack	*child2;
-	
+
 	child2 = &(t_stack){0};
 	child2->pid2 = fork();
 	if (child2->pid2 == -1)
-		return -1;
+		return (-1);
 	else if (child2->pid2 == 0)
 	{
 		child2->fetchcmd1 = cmd_path(envp);
@@ -60,9 +60,9 @@ pid_t	secondchild(int argc, char **argv, char **envp, int fd2, int fd1)
 		}
 		dup2(child2->outfile, 1);
 		close(child2->outfile);
-		dup2(fd2, 0);
-		close(fd2);
-		close(fd1);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
 		check_cmd_path(child2->fetchcmd1, argc, argv[3], envp);
 		freefunc(child2->fetchcmd1);
 	}
@@ -75,26 +75,24 @@ int	pipex(int argc, char **argv, char **envp)
 	int	pid2;
 	int	status1;
 	int	status2;
-	int	fd[2];
-	int	pipes;
+	int	fds[2];
 
 	status2 = 0;
-	pipes = pipe(fd);
-	if (pipes == -1) //pass into a variable to check gaurd
+	if (pipe(fds) == -1)
 		exit(1);
-	pid1 = firstchild(argc, argv, envp, fd[1], fd[0]);
-	close(fd[1]);
-	pid2 = secondchild(argc, argv, envp, fd[0], fd[1]);
-	close(fd[0]);
+	pid1 = firstchild(argc, argv, envp, fds);
+	close(fds[1]);
+	pid2 = secondchild(argc, argv, envp, fds);
+	close(fds[0]);
 	waitpid(pid2, &status2, 0);
 	waitpid(pid1, &status1, 0);
 	if (WIFEXITED(status2))
-		return WEXITSTATUS(status2);
+		return (WEXITSTATUS(status2));
 	else
 		return (1);
 }
 
-int main(int argc, char **argv, char** envp)
+int	main(int argc, char **argv, char **envp)
 {
 	int	exit_code;
 
@@ -105,10 +103,8 @@ int main(int argc, char **argv, char** envp)
 	}
 	if (argc != 5)
 		return (1);
-	if (argv[2][0] == '\0') // if the first command is empty exit the program
-	{
+	if (argv[2][0] == '\0')
 		exit(0);
-	}
 	exit_code = pipex(argc, argv, envp);
 	return (exit_code);
 }

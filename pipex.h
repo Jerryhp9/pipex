@@ -13,15 +13,11 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <stdio.h>
 # include <unistd.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <sys/stat.h>
 # include <stdlib.h>
-# include <stdarg.h>
 # include <sys/wait.h>
-# include <string.h>
 # include "Libft/libft.h"
 
 typedef struct s_stack

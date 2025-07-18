@@ -6,7 +6,7 @@
 #    By: jhor <jhor@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/06 16:12:35 by jhor              #+#    #+#              #
-#    Updated: 2025/07/17 20:53:37 by jhor             ###   ########.fr        #
+#    Updated: 2025/07/18 14:42:51 by jhor             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c \
 ft_atol.c 
 
 SRC2 = ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c \
-ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c\
-ft_lstiter.c ft_strjoinv.c
+ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
+ft_lstiter.c ft_strjoinv.c ft_print_char.c ft_print_digit.c ft_print_str.c \
+ft_print_lower_hexa.c ft_print_pointer.c ft_print_upper_hexa.c ft_printf.c \
 
 OBJ1 = $(SRC1:.c=.o)
 OBJ2 = $(SRC2:.c=.o)

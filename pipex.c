@@ -63,7 +63,7 @@ pid_t	secondchild(int argc, char **argv, char **envp, int *fd)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		check_cmd_path(child2->fetchcmd1, argc, argv[3], envp);
+		check_cmd_paths(child2->fetchcmd1, argc, argv[3], envp);
 		freefunc(child2->fetchcmd1);
 	}
 	return (child2->pid2);
@@ -71,23 +71,28 @@ pid_t	secondchild(int argc, char **argv, char **envp, int *fd)
 
 int	pipex(int argc, char **argv, char **envp)
 {
-	int	pid1;
-	int	pid2;
-	int	status1;
-	int	status2;
-	int	fds[2];
+	int			pid1;
+	int			pid2;
+	t_status	status;
+	int			fds[2];
 
-	status2 = 0;
+	init_status(&status);
 	if (pipe(fds) == -1)
 		exit(1);
 	pid1 = firstchild(argc, argv, envp, fds);
 	close(fds[1]);
 	pid2 = secondchild(argc, argv, envp, fds);
 	close(fds[0]);
-	waitpid(pid2, &status2, 0);
-	waitpid(pid1, &status1, 0);
-	if (WIFEXITED(status2))
-		return (WEXITSTATUS(status2));
+	waitpid(pid2, &status.status2, 0);
+	waitpid(pid1, &status.status1, 0);
+	if (WIFEXITED(status.status1) && WEXITSTATUS(status.status1) == 127)
+		return (127);
+	if (WIFEXITED(status.status2) && WEXITSTATUS(status.status2) == 127)
+		return (127);
+	if (WIFEXITED(status.status2))
+		return (WEXITSTATUS(status.status2));
+	else if (WIFEXITED(status.status1))
+		return (WEXITSTATUS(status.status1));
 	else
 		return (1);
 }
@@ -98,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc == 1)
 	{
-		printf("error\n");
+		ft_printf("error\n");
 		return (1);
 	}
 	if (argc != 5)

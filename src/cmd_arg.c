@@ -39,3 +39,24 @@ void	exec_cmd(char **concat, t_cato *cdph, char **envp)
 		cdph->i++;
 	}
 }
+
+int	check_cmd_paths(char **concat, int argc, char *argv, char **envp)
+{
+	t_cato	*cdph;
+
+	cdph = &(t_cato){0};
+	cdph->i = 0;
+	cdph->cmds = cmd_arg(argc, argv);
+	if (!cdph->cmds || !*cdph->cmds)
+	{
+		freefunc(cdph->cmds);
+		return (1);
+	}
+	if (*cdph->cmds && **cdph->cmds != '\0'
+		&& access(cdph->cmds[0], F_OK | X_OK) == 0)
+		execve(cdph->cmds[0], cdph->cmds, envp);
+	exec_cmd(concat, cdph, envp);
+	freefunc(concat);
+	error_printing(cdph->cmds);
+	(freefunc(cdph->cmds), exit(127));
+}

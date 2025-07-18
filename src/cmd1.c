@@ -84,6 +84,13 @@ int	check_cmd_path(char **concat, int argc, char *argv, char **envp)
 		&& access(cdph->cmds[0], F_OK | X_OK) == 0)
 		execve(cdph->cmds[0], cdph->cmds, envp);
 	exec_cmd(concat, cdph, envp);
+	if (access(cdph->cmds[0], F_OK | X_OK) == -1
+		|| access(cdph->execmd, F_OK | X_OK) == -1)
+	{
+		freefunc(concat);
+		error_printing(cdph->cmds);
+		(freefunc(cdph->cmds), exit(0));
+	}
 	freefunc(concat);
 	error_printing(cdph->cmds);
 	(freefunc(cdph->cmds), exit(127));

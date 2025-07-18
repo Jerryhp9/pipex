@@ -34,12 +34,18 @@ typedef struct s_list
 	char	**fetchcmd;
 }	t_list;
 
-typedef struct p_cato
+typedef struct s_cato
 {
 	int		i;
 	char	*execmd;
 	char	**cmds;
 }	t_cato;
+
+typedef struct s_status
+{
+	int	status1;
+	int	status2;
+}	t_status;
 
 // static int	wordcount(char *str, char c);
 char		**ft_split(char *s, char c);
@@ -51,10 +57,13 @@ char		*fetchpath(char **envp);
 char		**cmd_arg(int argc, char *argv);
 char		**cmd_path(char **envp);
 int			check_cmd_path(char **concat, int argc, char *argv, char **envp);
+int			check_cmd_paths(char **concat, int argc, char *argv, char **envp);
+void		error_printing(char **s);
 void		exec_cmd(char **concat, t_cato *cdph, char **envp);
 void		freefunc(char **concat);
 int			pipex(int argc, char **argv, char **envp);
 pid_t		secondchild(int argc, char **argv, char **envp, int *fd);
 pid_t		firstchild(int argc, char **argv, char **envp, int *fd);
+void		init_status(t_status *status);
 
 #endif
